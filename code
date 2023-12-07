@@ -1,0 +1,88 @@
+#include <iostream>
+#include <cmath>
+#include <cstdlib>
+#include<conio.h>
+using namespace std;
+
+int main() 
+{
+    int size;
+    cout<<"Enter number of classes : ";
+    cin>>size;
+
+    float lower_class[size];
+    float upper_class[size];
+    int F[size];
+    double X[size];
+    float FX[size];
+    double mean;
+    double sum_F = 0, sum_FX = 0;
+    double X_mean[size];
+    double X_mean_sq[size];
+    double F_X_mean[size];
+    double sum_FX_mean_sq = 0, sum_F_X_mean = 0;
+    double variance = 0, standard_deviation = 0;
+
+    for (int i = 0; i < size; i++) 
+    {
+        cout<<"Enter "<<i+1<<" lower Class boundary : ";
+        cin>>lower_class[i];
+
+        cout<<"Enter " <<i+1<<" upper Class boundary : ";
+        cin>>upper_class[i];
+
+        cout<<"Enter it's frequency : ";
+        cin>>F[i];
+    }
+
+    for (int j = 0; j < size; j++) 
+    {
+        X[j] = (lower_class[j] + upper_class[j]) / 2;
+        FX[j] = X[j] * F[j];
+    }
+
+    for (int x=0 ; x<size ; x++) 
+    {
+        sum_F += F[x];
+        sum_FX += FX[x];
+    }
+
+    mean = sum_FX / sum_F;
+
+    for (int k=0 ; k<size ; k++) 
+    {
+        X_mean[k] = X[k] - mean;
+        X_mean_sq[k] = X_mean[k] * X_mean[k];
+        F_X_mean[k] = X_mean_sq[k] * F[k];
+    }
+
+    for (int h=0 ; h < size ; h++) 
+    {
+        sum_F_X_mean += F_X_mean[h];
+        sum_FX_mean_sq += X_mean_sq[h];
+    }
+
+    variance = sum_F_X_mean / sum_F;
+    standard_deviation = sqrt(variance);
+    
+    system("cls");
+
+    cout<<"-----------------------------------------------------------------------------------"<<endl;
+    cout << "Class Boundries \t     Frequency \t   X \t   FX \t X-mean \t F(X-mean)"<<endl;
+    cout<<"-----------------------------------------------------------------------------------"<<endl;
+    
+    for (int z=0 ; z<size ; z++) 
+    {
+        cout<<"   "<<lower_class[z]<<" --- "<<upper_class[z]<<"\t\t\t"<<F[z]<<"\t   "<<X[z];
+        cout<<"\t   "<<FX[z]<<"\t  "<<X_mean[z]<<"\t\t   "<<X_mean_sq[z]<<endl;
+    }
+    cout<<"-----------------------------------------------------------------------------------"<<endl;
+    cout<<"\t\t\t\t"<<sum_F<<"\t\t   "<<sum_FX<<"\t\t\t   "<<sum_FX_mean_sq<<endl;
+    cout<<"-----------------------------------------------------------------------------------"<<endl;
+
+    cout<<endl<<endl<<endl;
+    cout<<"Mean : "<<mean<<endl;
+    cout<<"Variance : "<<variance<<endl;
+    cout<<"Standard deviation : "<<standard_deviation<<endl;
+
+}
